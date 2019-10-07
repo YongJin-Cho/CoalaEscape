@@ -105,14 +105,7 @@ Object.member('isPicked', function(){
 //////// Door Definition
 
 function Door(room, name, closedImage, openedImage, connectedTo){
-	// Object member variables
-	this.room = room
-	this.name = name
-	this.image = closedImage
-
-	if (room !== undefined){
-		this.id = room.id.createObject(name, closedImage)
-	}
+	Object.call(this, room, name, closedImage)
 
 	// Door properties
 	this.closedImage = closedImage
@@ -146,14 +139,7 @@ Door.member('onClose', function(){
 //////// Keypad Definition
 
 function Keypad(room, name, image, password, callback){
-	// Object member variables
-	this.room = room
-	this.name = name
-	this.image = image
-
-	if (room !== undefined){
-		this.id = room.id.createObject(name, image)
-	}
+	Object.call(this, room, name, image)
 
 	// Keypad properties
 	this.password = password
@@ -169,21 +155,10 @@ Keypad.member('onClick', function(){
 
 //////// DoorLock Definition
 function DoorLock(room, name, image, password, door, message){
-	// Object member variables
-	this.room = room
-	this.name = name
-	this.image = image
-
-	if (room !== undefined){
-		this.id = room.id.createObject(name, image)
-	}
-
-	// Keypad properties
-	this.password = password
-	this.callback = function(){
+	Keypad.call(this, room, name, image, password, function(){
 		printMessage(message)
 		door.unlock()
-	}
+	})
 }
 // inherited from Object
 DoorLock.prototype = new Keypad()
@@ -191,14 +166,7 @@ DoorLock.prototype = new Keypad()
 /////// Item Definition
 
 function Item(room, name, image){
-	// Object member variables
-	this.room = room
-	this.name = name
-	this.image = image
-
-	if (room !== undefined){
-		this.id = room.id.createObject(name, image)
-	}
+	Object.call(this, room, name, image)
 }
 // inherited from Object
 Item.prototype = new Object()
